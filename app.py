@@ -128,7 +128,7 @@ inp = [gradio.inputs.Textbox(label="请输入你的API-key(sk开头的字符串)
 
 chat_Response_gui = gradio.Interface(fn=main,
                                  inputs=inp,
-                                 outputs = [gradio.Textbox(lines=20, label="回复结果"), gradio.Textbox(lines=2, label="资源统计")],
+                                 outputs = [gradio.Textbox(lines=10, label="回复结果"), gradio.Textbox(lines=2, label="资源统计")],
                                  title=title,
                                  description=description)
 
