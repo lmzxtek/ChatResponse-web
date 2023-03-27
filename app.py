@@ -30,12 +30,12 @@ class Response:
         response_prompt_token = 1000        
         text_token = len(self.encoding.encode(self.comment))
         input_text_index = int(len(self.comment)*(self.max_token_num-response_prompt_token)/text_token)
-        input_text = "This is the review comments:" + text[:input_text_index]
+        input_text = "This is the review comments:" + self.comment[:input_text_index]
         messages=[
                 {"role": "system", "content": """You are the author, you submitted a paper, and the reviewers gave the review comments. 
                 Please reply with what we have done, not what we will do.
                 You need to extract questions from the review comments one by one, and then respond point-to-point to the reviewers’ concerns. 
-                Please answer in {}. Follow the format of the output later: 
+                Must be output in {}. Follow the format of the output later: 
                 - Response to reviewers
                 #1 reviewer
                 Concern #1: xxxx
