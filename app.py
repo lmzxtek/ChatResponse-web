@@ -25,7 +25,7 @@ class Response:
     @tenacity.retry(wait=tenacity.wait_exponential(multiplier=1, min=4, max=10),
                     stop=tenacity.stop_after_attempt(5),
                     reraise=True)
-    def chat_response(self, text):
+    def chat_response(self):
         openai.api_key = self.chat_api_list[self.cur_api]
         self.cur_api += 1
         self.cur_api = 0 if self.cur_api >= len(self.chat_api_list)-1 else self.cur_api
@@ -103,7 +103,7 @@ title = "🤖ChatResponse🤖"
 description = '''<div align='left'>
 <img align='right' src='http://i.imgtg.com/2023/03/22/94PLN.png' width="250">
 
-<strong>ChatResponse是一款根据审稿人的评论自动生成作者回复的AI助手。用途如下：</strong>其用途为：
+<strong>ChatResponse是一款根据审稿人的评论自动生成作者回复的AI助手。</strong>其用途为：
 
 ⭐️根据输入的审稿意见，ChatResponse会自动提取其中各个审稿人的问题和担忧，并生成点对点的回复。
 
