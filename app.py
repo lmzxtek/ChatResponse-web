@@ -26,12 +26,10 @@ class Response:
                     stop=tenacity.stop_after_attempt(5),
                     reraise=True)
     def chat_response(self):
-        openai.api_key = self.chat_api_list[self.cur_api]
-        self.cur_api += 1
-        self.cur_api = 0 if self.cur_api >= len(self.chat_api_list)-1 else self.cur_api
+        openai.api_key = self.api
         response_prompt_token = 1000        
         text_token = len(self.encoding.encode(self.comment))
-        input_text_index = int(len(text)*(self.max_token_num-response_prompt_token)/text_token)
+        input_text_index = int(len(self.comment)*(self.max_token_num-response_prompt_token)/text_token)
         input_text = "This is the review comments:" + text[:input_text_index]
         messages=[
                 {"role": "system", "content": """You are the author, you submitted a paper, and the reviewers gave the review comments. 
@@ -101,7 +99,7 @@ title = "🤖ChatResponse🤖"
 # 描述
 
 description = '''<div align='left'>
-<img align='right' src='http://i.imgtg.com/2023/03/22/94PLN.png' width="250">
+<img align='right' src='http://i.imgtg.com/2023/03/22/94PLN.png' width="220">
 
 <strong>ChatResponse是一款根据审稿人的评论自动生成作者回复的AI助手。</strong>其用途为：
 
@@ -128,7 +126,7 @@ inp = [gradio.inputs.Textbox(label="请输入你的API-key(sk开头的字符串)
 
 chat_Response_gui = gradio.Interface(fn=main,
                                  inputs=inp,
-                                 outputs = [gradio.Textbox(lines=10, label="回复结果"), gradio.Textbox(lines=2, label="资源统计")],
+                                 outputs = [gradio.Textbox(lines=11, label="回复结果"), gradio.Textbox(lines=2, label="资源统计")],
                                  title=title,
                                  description=description)
 
