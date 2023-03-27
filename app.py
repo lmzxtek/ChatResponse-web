@@ -25,12 +25,12 @@ class Response:
     @tenacity.retry(wait=tenacity.wait_exponential(multiplier=1, min=4, max=10),
                     stop=tenacity.stop_after_attempt(5),
                     reraise=True)
-    def chat_response(self):
+    def chat_response(self, comment):
         openai.api_key = self.api
         response_prompt_token = 1000        
-        text_token = len(self.encoding.encode(self.comment))
-        input_text_index = int(len(self.comment)*(self.max_token_num-response_prompt_token)/text_token)
-        input_text = "This is the review comments:" + self.comment[:input_text_index]
+        text_token = len(self.encoding.encode(comment))
+        input_text_index = int(len(comment)*(self.max_token_num-response_prompt_token)/text_token)
+        input_text = "This is the review comments:" + comment[:input_text_index]
         messages=[
                 {"role": "system", "content": """You are the author, you submitted a paper, and the reviewers gave the review comments. 
                 Please reply with what we have done, not what we will do.
@@ -87,7 +87,7 @@ def main(api, comment, language):
     else:
         Response1 = Response(api, comment, language)
         # 开始判断是路径还是文件：   
-        response, total_token_used = Response1.chat_response()
+        response, total_token_used = Response1.chat_response(comment)
     time_used = time.time() - start_time
     output2 ="使用token数："+ str(total_token_used)+"\n花费时间："+ str(round(time_used, 2)) +"秒"
     return response, output2
