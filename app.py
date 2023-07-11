@@ -61,22 +61,22 @@ class Response:
                 },
                 {"role": "user", "content": input_text},
             ]
-                
-        response = openai.ChatCompletion.create(
-            model="gpt-3.5-turbo",
-            messages=messages,
-        )
-        result = ''
-        for choice in response.choices:
-            result += choice.message.content
+        try:
+            response = openai.ChatCompletion.create(
+                model="gpt-3.5-turbo",
+                messages=messages,
+            )
+            result = ''
+            for choice in response.choices:
+                result += choice.message.content
+        except Exception as e:  
+        # 处理其他的异常  
+            result = "非常抱歉>_<，生了一个错误："+ str(e)
+            usage  = 'xxxxx'
         print("********"*10)
         print(result)
-        print("********"*10)
-        print("prompt_token_used:", response.usage.prompt_tokens)
-        print("completion_token_used:", response.usage.completion_tokens)
-        print("total_token_used:", response.usage.total_tokens)
-        print("response_time:", response.response_ms/1000.0, 's')                    
-        return result, response.usage.total_tokens
+        print("********"*10)                  
+        return result, usage
                         
                            
 
@@ -107,9 +107,9 @@ description = '''<div align='left'>
 
 如果觉得很卡，可以点击右上角的Duplicate this Space，把ChatResponse复制到你自己的Space中！
 
-本项目的[Github](https://github.com/nishiwen1214/ChatReviewer)，欢迎Star和Fork，也欢迎大佬赞助让本项目快速成长！💗（[获取Api Key]
+本项目的[Github](https://github.com/nishiwen1214/ChatReviewer)，欢迎Star和Fork，也欢迎大佬赞助让本项目快速成长！💗
 
-**很多人留言没有ChatGPT的API-key…不会申请API的可以加我微信"Shiwen_Ni"(注：本人不卖号，真不会的可以找我，备注api)**
+**很多人留言没有ChatGPT的API-key…不会申请API的可以加我微信"Shiwen_Ni"(备注api)**
 </div>
 '''
 
@@ -121,7 +121,7 @@ inp = [gradio.inputs.Textbox(label="请输入你的API-key(sk开头的字符串)
         label="请输入要回复的审稿意见",
         default=""
     ),
-    gradio.inputs.Radio(choices=["English", "Chinese"],
+    gradio.inputs.Radio(choices=["English", "Chinese", "French", "German","Japenese"],
                         default="English",
                         label="选择输出语言"),
 ]
