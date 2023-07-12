@@ -35,6 +35,7 @@ class Response:
                 {"role": "system", "content": """You are the author, you submitted a paper, and the reviewers gave the review comments. 
                 Please reply with what we have done, not what we will do.
                 You need to extract questions from the review comments one by one, and then respond point-to-point to the reviewers’ concerns. 
+                You need to determine for yourself how many reviewers there are and how many questions each reviewer has.
                 Must be output in {}. Follow the format of the output later: 
                 - Response to reviewers
                 #1 reviewer
