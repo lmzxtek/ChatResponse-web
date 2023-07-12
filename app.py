@@ -69,6 +69,7 @@ class Response:
             result = ''
             for choice in response.choices:
                 result += choice.message.content
+            usage = response.usage.total_tokens
         except Exception as e:  
         # 处理其他的异常  
             result = "非常抱歉>_<，生了一个错误："+ str(e)
