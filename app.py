@@ -18,7 +18,7 @@ class Response:
         self.api = api
         self.comment = comment
         self.language = language     
-        self.max_token_num = 4096
+        self.max_token_num = 14096
         self.encoding = tiktoken.get_encoding("gpt2")
     
     
@@ -64,7 +64,7 @@ class Response:
             ]
         try:
             response = openai.ChatCompletion.create(
-                model="gpt-3.5-turbo",
+                model="gpt-3.5-turbo-16k",
                 messages=messages,
             )
             result = ''
